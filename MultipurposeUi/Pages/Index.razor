@@ -1,0 +1,53 @@
+﻿@page "/"
+@using MultipurposeUi.Data;
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+
+@* @if (readLine == null)
+{
+    <p><em>Loading...</em></p>
+
+}
+else
+{ *@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@readLine</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Current line: @readLine</p>
+
+@* } *@
+
+
+@code {
+    private string? readLine;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        var taskFunction = async () =>
+
+        {
+            await foreach (var line in TextFileReader.ReadTextFile("TestFile.txt"))
+            {
+                readLine = line;
+                StateHasChanged();
+            }
+        };
+    }
+}
